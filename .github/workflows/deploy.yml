@@ -1,0 +1,125 @@
+
+name: Diary Store CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Website
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Check Required Files
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          echo "All required website files exist."
+
+      - name: Validate HTML Structure
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+
+          class WebsiteParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.stack = []
+                  self.errors = []
+                  self.void_tags = {
+                      "area", "base", "br", "col", "embed",
+                      "hr", "img", "input", "link", "meta",
+                      "param", "source", "track", "wbr"
+                  }
+
+              def handle_starttag(self, tag, attrs):
+                  if tag not in self.void_tags:
+                      self.stack.append(tag)
+
+              def handle_endtag(self, tag):
+                  if tag in self.void_tags:
+                      return
+                  if not self.stack or self.stack[-1] != tag:
+                      self.errors.append(
+                          f"Unexpected closing tag: </{tag}>"
+                      )
+                  else:
+                      self.stack.pop()
+
+          html = Path("index.html").read_text(encoding="utf-8")
+          parser = WebsiteParser()
+          parser.feed(html)
+          parser.close()
+
+          if parser.errors:
+              raise SystemExit("\n".join(parser.errors))
+
+          if parser.stack:
+              raise SystemExit(
+                  "Unclosed HTML tags: " + ", ".join(parser.stack)
+              )
+
+          for required in (
+              'id="collection"',
+              'id="cart-items"',
+              'id="checkout-button"',
+              'id="newsletter-form"'
+          ):
+              if required not in html:
+                  raise SystemExit(f"Missing required HTML element: {required}")
+
+          print("HTML structure checks passed.")
+          PY
+
+      - name: Check JavaScript Syntax
+        run: node --check script.js
+
+      - name: Check Stylesheet
+        run: |
+          test -s style.css
+          echo "Stylesheet exists and is not empty."
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: validate
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Website Files
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - name: Deploy Website
+        id: deployment
+        uses: actions/deploy-pages@v4
