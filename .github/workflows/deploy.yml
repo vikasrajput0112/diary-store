@@ -1,7 +1,6 @@
 
 name: Diary Store CI/CD
 
-
 on:
   push:
     branches:
@@ -10,6 +9,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   validate:
@@ -40,3 +42,34 @@ jobs:
         run: |
           test -s style.css
           echo "CSS file check passed."
+
+  deploy:
+    name: Deploy Website
+    needs: validate
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Website Files
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - name: Deploy Website
+        id: deployment
+        uses: actions/deploy-pages@v4
