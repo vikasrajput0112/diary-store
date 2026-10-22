@@ -1,6 +1,7 @@
 
 name: Diary Store CI/CD
 
+
 on:
   push:
     branches:
