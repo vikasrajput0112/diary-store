@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover beautiful notebooks and diaries for your everyday thoughts, plans and ideas.">
+  <title>PaperNest | Diaries for Every Day</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#home">Paper<span>Nest</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#collection">Collection</a>
+      <a href="#about">Our Story</a>
+    </nav>
+    <a class="cart-link" href="#collection">
+      Shop diaries <span id="cart-count">0</span>
+    </a>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <p class="eyebrow">YOUR THOUGHTS DESERVE A HOME</p>
+        <h1>Make room for<br>your <em>next chapter.</em></h1>
+        <p class="hero-copy">
+          Thoughtfully designed diaries for your plans, dreams,
+          daily reflections and everything in between.
+        </p>
+        <a class="button button-dark" href="#collection">Explore the collection →</a>
+        <div class="hero-note">Simple pages. Endless possibilities.</div>
+      </div>
+
+      <div class="hero-art" aria-label="Featured diary">
+        <div class="sun-shape"></div>
+        <div class="book book-back"></div>
+        <div class="book book-front">
+          <span class="book-brand">PAPERNEST</span>
+          <span class="book-line"></span>
+          <span class="book-title">my little<br>book of<br><em>everything.</em></span>
+          <span class="book-year">NOTES · PLANS · DREAMS</span>
+        </div>
+        <div class="art-caption">MADE FOR YOUR EVERYDAY</div>
+      </div>
+    </section>
+
+    <section class="benefits" aria-label="Our benefits">
+      <div>✳ Thoughtful design</div>
+      <div>✳ Everyday inspiration</div>
+      <div>✳ A little space for you</div>
+    </section>
+
+    <section class="collection section" id="collection">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FIND YOUR FAVOURITE</p>
+          <h2>The diary collection</h2>
+        </div>
+        <p>One page at a time, one idea at a time.</p>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-art art-cream">
+            <span class="product-label">BESTSELLER</span>
+            <div class="mini-book cream-book">
+              <span>PAPERNEST</span>
+              <strong>The Daily<br>Journal</strong>
+              <small>YOUR DAY, YOUR WAY</small>
+            </div>
+          </div>
+          <div class="product-info">
+            <div>
+              <h3>The Daily Journal</h3>
+              <p>For plans, lists and everyday thoughts.</p>
+            </div>
+            <strong>₹399</strong>
+          </div>
+          <button class="button button-outline add-to-cart"
+            data-product="The Daily Journal" data-price="399">
+            Add to bag
+          </button>
+        </article>
+
+        <article class="product-card">
+          <div class="product-art art-green">
+            <div class="mini-book green-book">
+              <span>PAPERNEST</span>
+              <strong>Little<br>Dreams</strong>
+              <small>IDEAS IN BLOOM</small>
+            </div>
+          </div>
+          <div class="product-info">
+            <div>
+              <h3>Little Dreams</h3>
+              <p>A home for goals and big ideas.</p>
+            </div>
+            <strong>₹499</strong>
+          </div>
+          <button class="button button-outline add-to-cart"
+            data-product="Little Dreams" data-price="499">
+            Add to bag
+          </button>
+        </article>
+
+        <article class="product-card">
+          <div class="product-art art-rose">
+            <div class="mini-book rose-book">
+              <span>PAPERNEST</span>
+              <strong>Dear<br>Tomorrow</strong>
+              <small>PAUSE · REFLECT · GROW</small>
+            </div>
+          </div>
+          <div class="product-info">
+            <div>
+              <h3>Dear Tomorrow</h3>
+              <p>A journal for quiet moments.</p>
+            </div>
+            <strong>₹449</strong>
+          </div>
+          <button class="button button-outline add-to-cart"
+            data-product="Dear Tomorrow" data-price="449">
+            Add to bag
+          </button>
+        </article>
+      </div>
+
+      <div class="cart-panel" id="cart-panel" aria-live="polite">
+        <div>
+          <p class="eyebrow">YOUR SELECTION</p>
+          <h3>Your shopping bag</h3>
+        </div>
+        <ul id="cart-items">
+          <li>Your bag is empty. Find a diary you love!</li>
+        </ul>
+        <div class="cart-total">Total: <strong id="cart-total">₹0</strong></div>
+        <button class="button button-dark" id="checkout-button">
+          Continue to order
+        </button>
+        <p class="cart-message" id="cart-message" role="status"></p>
+      </div>
+    </section>
+
+    <section class="story section" id="about">
+      <p class="eyebrow">A NOTE FROM US</p>
+      <h2>Less scrolling.<br><em>More soul-searching.</em></h2>
+      <p>
+        PaperNest is about slowing down, collecting your thoughts
+        and making space for the things that matter. Start with
+        one page and see where it takes you.
+      </p>
+      <a href="#collection" class="text-link">Find your diary →</a>
+    </section>
+
+    <section class="newsletter">
+      <div>
+        <p class="eyebrow">A LITTLE NOTE IN YOUR INBOX</p>
+        <h2>Good things are on the page.</h2>
+        <p>Our newsletter form is a demo and does not send or store emails yet.</p>
+      </div>
+      <form id="newsletter-form">
+        <label class="sr-only" for="email">Your email address</label>
+        <input id="email" type="email" placeholder="Your email address" required>
+        <button class="button button-dark" type="submit">Count me in</button>
+        <p id="newsletter-message" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="logo" href="#home">Paper<span>Nest</span></a>
+    <p>Made for your thoughts, dreams and everyday.</p>
+    <p>© <span id="year"></span> PaperNest. Demo store.</p>
+  </footer>
+</body>
+</html>
